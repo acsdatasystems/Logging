@@ -17,8 +17,8 @@
           Events = @(@{
             Timestamp = [System.DateTimeOffset]::Now.ToString('o')
             Level = $Configuration.Level
-            MessageTemplate = $Log.Message | ConvertTo-Json
-            Properties = ($Log + $Configuration.Properties) | ConvertTo-Json
+            MessageTemplate = $Log.Message
+            Properties = ($Log + $Configuration.Properties)
           })
         }
 
@@ -28,6 +28,6 @@
             $Url = '{0}/api/events/raw?' -f $Configuration.Url
         }
 
-        Invoke-RestMethod -Uri $Url -Body ($Body | ConvertTo-Json) -ContentType "application/json" -Method POST | Out-Null
+        Invoke-RestMethod -Uri $Url -Body ($Body | ConvertTo-Json -Depth 3) -ContentType "application/json" -Method POST | Out-Null
     }
 }
